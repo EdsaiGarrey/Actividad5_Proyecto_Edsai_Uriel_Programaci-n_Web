@@ -1,68 +1,125 @@
-// ===============================
-// FUNCIONES DE VALIDACIÓN
-// ===============================
+// ======================================================
+// Librería de utilidades para validaciones
+// Archivo: utileria.js
+// Proyecto: Actividad 5 - Proyecto Login y Sistema
+// ======================================================
+
 
 // Valida que el correo tenga un formato correcto.
 // Ejemplo válido: usuario@correo.com
-const validarCorreo = (correo) => {
+function validarCorreo(correo) {
     const expresionCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return expresionCorreo.test(correo);
-};
+}
 
-// Valida que la contraseña tenga mínimo 6 caracteres.
-// Esta validación es sencilla porque el login es simulado.
-const validarPassword = (password) => {
-    return password.length >= 6;
-};
 
-// Valida que el número de control tenga exactamente 6 dígitos.
-// Solo acepta números, no letras.
-const validarNumeroControl = (numeroControl) => {
+// Valida que el texto contenga solo letras y espacios.
+// Se usa para nombres de usuarios o alumnos.
+function soloLetras(texto) {
+    const expresionLetras = /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/;
+    return expresionLetras.test(texto);
+}
+
+
+// Valida que un dato tenga una longitud exacta.
+// Ejemplo: validarLongitud("123456", 6)
+function validarLongitud(numero, maxLongitud) {
+    return numero.length === maxLongitud;
+}
+
+
+// Calcula la edad con base en una fecha de nacimiento.
+function calcularEdad(fechaNacimiento) {
+    const fechaActual = new Date();
+    const fechaNac = new Date(fechaNacimiento);
+
+    let edad = fechaActual.getFullYear() - fechaNac.getFullYear();
+
+    const mes = fechaActual.getMonth() - fechaNac.getMonth();
+
+    if (mes < 0 || (mes === 0 && fechaActual.getDate() < fechaNac.getDate())) {
+        edad--;
+    }
+
+    return edad;
+}
+
+
+// Valida si una persona es mayor de edad usando fecha de nacimiento.
+function esMayorDeEdad(fechaNacimiento) {
+    return calcularEdad(fechaNacimiento) >= 18;
+}
+
+
+// Valida contraseña.
+// Reglas:
+// - Mínimo 8 caracteres
+// - Al menos una letra mayúscula
+// - Al menos un número
+function validarPassword(password) {
+    const tieneLongitud = password.length >= 8;
+    const tieneMayuscula = /[A-Z]/.test(password);
+    const tieneNumero = /[0-9]/.test(password);
+
+    return tieneLongitud && tieneMayuscula && tieneNumero;
+}
+
+
+// Valida que el número de control tenga exactamente 6 dígitos numéricos.
+function validarNumeroControl(numeroControl) {
     const expresionNumeroControl = /^\d{6}$/;
     return expresionNumeroControl.test(numeroControl);
-};
+}
 
-// ===============================
-// FUNCIONES DEL SISTEMA
-// ===============================
+
+// ======================================================
+// Funciones del sistema principal index.html
+// ======================================================
+
 
 // Obtiene el usuario guardado desde login.html.
 // Uri debe guardar el usuario en localStorage con la clave "usuarioActivo".
-const obtenerUsuarioActivo = () => {
+function obtenerUsuarioActivo() {
     return localStorage.getItem("usuarioActivo");
-};
+}
+
 
 // Muestra el usuario en la parte derecha del navbar.
-const mostrarUsuarioEnNavbar = () => {
+function mostrarUsuarioEnNavbar() {
     const usuario = obtenerUsuarioActivo();
     const nombreUsuarioNavbar = document.getElementById("nombreUsuarioNavbar");
+
+    // Si este elemento no existe, significa que no estamos en index.html.
+    if (!nombreUsuarioNavbar) {
+        return;
+    }
 
     if (usuario) {
         nombreUsuarioNavbar.textContent = usuario;
     } else {
-        // Si no hay usuario activo, se regresa al login.
         window.location.href = "login.html";
     }
-};
+}
+
 
 // Cierra la sesión simulada.
-// Elimina el usuario guardado y regresa al login.
-const cerrarSesion = () => {
+function cerrarSesion() {
     localStorage.removeItem("usuarioActivo");
     window.location.href = "login.html";
-};
+}
 
-// ===============================
-// SIDEBAR Y MENÚ
-// ===============================
 
-// Abre o cierra el sidebar lateral.
-const configurarSidebar = () => {
+// Configura el sidebar lateral y el submenú de usuarios.
+function configurarSidebar() {
     const sidebar = document.getElementById("sidebar");
     const btnAbrirSidebar = document.getElementById("btnAbrirSidebar");
     const btnCerrarSidebar = document.getElementById("btnCerrarSidebar");
     const btnUsuarios = document.getElementById("btnUsuarios");
     const submenuUsuarios = document.getElementById("submenuUsuarios");
+
+    if (!sidebar || !btnAbrirSidebar || !btnCerrarSidebar || !btnUsuarios || !submenuUsuarios) {
+        return;
+    }
 
     btnAbrirSidebar.addEventListener("click", () => {
         sidebar.classList.add("activo");
@@ -75,16 +132,16 @@ const configurarSidebar = () => {
     btnUsuarios.addEventListener("click", () => {
         submenuUsuarios.classList.toggle("activo");
     });
-};
+}
 
-// ===============================
-// FORMULARIO DE USUARIOS
-// ===============================
 
 // Configura el formulario de captura de usuarios.
-// Valida nombre, correo y contraseña.
-const configurarFormularioUsuario = () => {
+function configurarFormularioUsuario() {
     const formUsuario = document.getElementById("formUsuario");
+
+    if (!formUsuario) {
+        return;
+    }
 
     formUsuario.addEventListener("submit", (evento) => {
         evento.preventDefault();
@@ -98,30 +155,34 @@ const configurarFormularioUsuario = () => {
             return;
         }
 
+        if (!soloLetras(nombre)) {
+            alert("El nombre solo debe contener letras y espacios.");
+            return;
+        }
+
         if (!validarCorreo(correo)) {
             alert("El correo electrónico no tiene un formato válido.");
             return;
         }
 
         if (!validarPassword(password)) {
-            alert("La contraseña debe tener mínimo 6 caracteres.");
+            alert("La contraseña debe tener mínimo 8 caracteres, una mayúscula y un número.");
             return;
         }
 
         alert("Usuario guardado correctamente.");
-
         formUsuario.reset();
     });
-};
+}
 
-// ===============================
-// FORMULARIO DE ALUMNOS
-// ===============================
 
 // Configura el formulario de alumnos.
-// Valida número de control y edad.
-const configurarFormularioAlumno = () => {
+function configurarFormularioAlumno() {
     const formAlumno = document.getElementById("formAlumno");
+
+    if (!formAlumno) {
+        return;
+    }
 
     formAlumno.addEventListener("submit", (evento) => {
         evento.preventDefault();
@@ -132,6 +193,11 @@ const configurarFormularioAlumno = () => {
 
         if (nombreAlumno === "") {
             alert("Debes escribir el nombre del alumno.");
+            return;
+        }
+
+        if (!soloLetras(nombreAlumno)) {
+            alert("El nombre del alumno solo debe contener letras y espacios.");
             return;
         }
 
@@ -146,18 +212,20 @@ const configurarFormularioAlumno = () => {
         }
 
         mostrarModalEdad(nombreAlumno, edad);
-
         formAlumno.reset();
     });
-};
+}
 
-// ===============================
-// MODAL DE EDAD
-// ===============================
 
 // Muestra un modal indicando si el alumno es mayor o menor de edad.
-const mostrarModalEdad = (nombreAlumno, edad) => {
-    const modalEdad = new bootstrap.Modal(document.getElementById("modalEdad"));
+function mostrarModalEdad(nombreAlumno, edad) {
+    const modalElemento = document.getElementById("modalEdad");
+
+    if (!modalElemento) {
+        return;
+    }
+
+    const modalEdad = new bootstrap.Modal(modalElemento);
     const modalHeader = document.getElementById("modalHeader");
     const tituloModalEdad = document.getElementById("tituloModalEdad");
     const mensajeModalEdad = document.getElementById("mensajeModalEdad");
@@ -175,13 +243,13 @@ const mostrarModalEdad = (nombreAlumno, edad) => {
     }
 
     modalEdad.show();
-};
+}
 
-// ===============================
-// CARGA INICIAL
-// ===============================
 
-// Cuando la página carga, se ejecutan todas las funciones principales.
+// ======================================================
+// Carga inicial del sistema
+// ======================================================
+
 document.addEventListener("DOMContentLoaded", () => {
     mostrarUsuarioEnNavbar();
     configurarSidebar();
@@ -190,7 +258,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const btnSalir = document.getElementById("btnSalir");
 
-    btnSalir.addEventListener("click", () => {
-        cerrarSesion();
-    });
+    if (btnSalir) {
+        btnSalir.addEventListener("click", () => {
+            cerrarSesion();
+        });
+    }
 });
