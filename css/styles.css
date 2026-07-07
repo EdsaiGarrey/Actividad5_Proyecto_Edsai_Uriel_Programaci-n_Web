@@ -1,0 +1,156 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f4f6f9;
+}
+
+/* Sidebar lateral */
+.sidebar {
+    width: 260px;
+    height: 100vh;
+    background-color: #1f2937;
+    color: white;
+    position: fixed;
+    top: 0;
+    left: -260px;
+    transition: left 0.3s ease;
+    z-index: 1000;
+    padding: 20px;
+}
+
+.sidebar.activo {
+    left: 0;
+}
+
+.sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #374151;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+
+.sidebar-header h4 {
+    margin: 0;
+}
+
+.btn-cerrar {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+/* Menú lateral */
+.menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu-btn {
+    width: 100%;
+    border: none;
+    background-color: #374151;
+    color: white;
+    padding: 12px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.menu-btn:hover {
+    background-color: #4b5563;
+}
+
+.submenu {
+    list-style: none;
+    padding-left: 15px;
+    margin-top: 10px;
+    display: none;
+}
+
+.submenu.activo {
+    display: block;
+}
+
+.submenu a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 6px;
+}
+
+.submenu a:hover {
+    background-color: #4b5563;
+}
+
+/* Contenido */
+.contenido {
+    min-height: 100vh;
+    transition: margin-left 0.3s ease;
+}
+
+.bienvenida {
+    background-color: white;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.card {
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.card-header {
+    font-weight: bold;
+}
+
+/* Modal */
+.modal-header.mayor {
+    background-color: #198754;
+    color: white;
+}
+
+.modal-header.menor {
+    background-color: #dc3545;
+    color: white;
+}
+
+/* Responsive */
+@media (min-width: 992px) {
+    .sidebar {
+        left: 0;
+    }
+
+    .contenido {
+        margin-left: 260px;
+    }
+
+    .btn-cerrar {
+        display: none;
+    }
+}
+
+@media (max-width: 576px) {
+    .navbar-brand {
+        font-size: 16px;
+    }
+
+    .bienvenida {
+        padding: 18px;
+    }
+
+    .card-body {
+        padding: 18px;
+    }
+}
