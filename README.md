@@ -3,8 +3,10 @@
 ## Portada
 
 **Materia:** Programación Web  
-**Proyecto:** Login y Sistema Académico 
+**Proyecto:** Sistema Académico con login
+
 **Docente:** Adelina Martinez Nieto 
+
 **Integrantes:**  
 - Edsai Alejandro García Reyes  
 - Uriel Eduardo Guzman Ramirez  
@@ -127,6 +129,7 @@ El usuario se muestra en este elemento:
 ```html
 <span id="nombreUsuarioNavbar">Usuario</span>
 ```
+<img width="1297" height="659" alt="image" src="https://github.com/user-attachments/assets/18b203a8-4c92-4b75-a5ee-7bf79c3ef048" />
 
 ---
 
@@ -200,9 +203,6 @@ Controla la apertura del sidebar y el submenú de usuarios.
 
 Muestra el modal indicando si el alumno es mayor o menor de edad.
 
----
-
-
 ## Participación del equipo
 
 ### Edsai Alejandro García Reyes
@@ -214,13 +214,11 @@ Realizó la parte del sistema principal:
 - Navbar con usuario
 - Dropdown de salida
 - Formulario de usuarios
-- Formulario de alumnos
 - Validación del número de control
 - Modal de edad
 - Parte de `utileria.js`
-- Documentación del README
 
-### Uriel Guz
+### Uriel Eduardo Guzman Ramirez
 
 Realizó la parte del login:
 
@@ -231,45 +229,7 @@ Realizó la parte del login:
 - Guardado del usuario en Local Storage
 - Redirección hacia `index.html`
 
----
-
-## Capturas de pantalla
-
-### Login
-
-![Login](img/captura-login.png)
-
-### Sistema principal
-
-![Sistema principal](img/captura-index.png)
-
-### Sidebar
-
-![Sidebar](img/captura-sidebar.png)
-
-### Navbar con usuario
-
-![Navbar](img/captura-navbar.png)
-
-### Formulario de alumnos
-
-![Formulario alumnos](img/captura-alumnos.png)
-
-### Modal de edad
-
-![Modal edad](img/captura-modal.png)
-
-### Cierre de sesión
-
-![Cierre de sesión](img/captura-salir.png)
-
----
-
-## Pruebas realizadas
-
-
 ## Conclusión
 
-Con este proyecto se aplicaron conocimientos de HTML, CSS, JavaScript, Bootstrap, Local Storage, Git y GitHub. El sistema permite simular un inicio de sesión, mostrar el usuario dentro del sistema, validar formularios y cerrar sesión correctamente.
+Con este proyecto se aplicaron conocimientos de HTML, CSS, JavaScript, Bootstrap, Local Storage. El sistema permite simular un inicio de sesión, mostrar el usuario dentro del sistema, validar formularios y cerrar sesión correctamente.
 
-Además, el trabajo se dividió entre los integrantes para que ambos participaran en el desarrollo y en los commits del repositorio.
